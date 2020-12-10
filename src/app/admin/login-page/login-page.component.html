@@ -1,4 +1,9 @@
-<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+<form
+  class="card"
+  [formGroup]="form"
+  (keydown)="enterSubmit($event)"
+  (ngSubmit)="onSubmit()"
+>
   <h2>Login to Admin panel</h2>
 
   <div class="form-control">

@@ -39,7 +39,15 @@ export class LoginPageComponent implements OnInit {
     return this[`${formControlName}ErrorMessage`]();
   }
 
-  submit() {
+  enterSubmit($event: KeyboardEvent) {
+    if ($event.key?.toLowerCase() !== 'enter') {
+      return;
+    }
+    $event.preventDefault();
+    this.onSubmit();
+  }
+
+  onSubmit() {
     if (this.form.invalid) {
       return;
     }
