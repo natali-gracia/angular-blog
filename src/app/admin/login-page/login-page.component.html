@@ -1,0 +1,29 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Login to Admin panel</h2>
+
+  <div class="form-control">
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email" />
+    <div
+      class="validation"
+      *ngIf="form.get('email').invalid && form.get('email').touched"
+    >
+      <small>{{ getErrorMessage('email') }}</small>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <label for="password">Password:</label>
+    <input id="password" type="password" formControlName="password" />
+    <div
+      class="validation"
+      *ngIf="form.get('password').invalid && form.get('password').touched"
+    >
+      <small>{{ getErrorMessage('password') }}</small>
+    </div>
+  </div>
+
+  <button [disabled]="form.invalid" type="submit" class="btn btn-primary">
+    Submit
+  </button>
+</form>
