@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from 'src/app/shared/interfaces';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -15,25 +17,28 @@ export class LoginPageComponent implements OnInit {
       Validators.minLength(6),
     ]),
   });
+  submitted = false;
 
-  constructor() {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
   emailErrorMessage() {
-    if (this.form.get('email').hasError('email')) {
+    if (this.form.get('email')!.hasError('email')) {
       return 'Incorrect Email format.';
     }
+    return;
   }
 
   passwordErrorMessage() {
-    if (this.form.get('password').hasError('minlength')) {
+    if (this.form.get('password')!.hasError('minlength')) {
       return 'Password must contain min 6 symbols';
     }
+    return;
   }
 
   getErrorMessage(formControlName: 'email' | 'password') {
-    if (this.form.get(formControlName).hasError('required')) {
+    if (this.form.get(formControlName)!.hasError('required')) {
       return 'You must enter a value!';
     }
     return this[`${formControlName}ErrorMessage`]();
@@ -52,13 +57,17 @@ export class LoginPageComponent implements OnInit {
       return;
     }
 
+    this.submitted = true;
+
     const user: User = {
       email: this.form.value.email,
       password: this.form.value.password,
     };
 
-    console.log('User Data:', user);
-
-    this.form.reset();
+    this.auth.login(user).subscribe(() => {
+      this.form.reset();
+      this.router.navigate(['/admin', 'dashboard']);
+      this.submitted = false;
+    });
   }
 }

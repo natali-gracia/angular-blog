@@ -11,7 +11,7 @@
     <input id="email" type="email" formControlName="email" />
     <div
       class="validation"
-      *ngIf="form.get('email').invalid && form.get('email').touched"
+      *ngIf="form.get('email')!.invalid && form.get('email')!.touched"
     >
       <small>{{ getErrorMessage('email') }}</small>
     </div>
@@ -22,13 +22,17 @@
     <input id="password" type="password" formControlName="password" />
     <div
       class="validation"
-      *ngIf="form.get('password').invalid && form.get('password').touched"
+      *ngIf="form.get('password')!.invalid && form.get('password')!.touched"
     >
       <small>{{ getErrorMessage('password') }}</small>
     </div>
   </div>
 
-  <button [disabled]="form.invalid" type="submit" class="btn btn-primary">
+  <button
+    [disabled]="form.invalid || submitted"
+    type="submit"
+    class="btn btn-primary"
+  >
     Submit
   </button>
 </form>
