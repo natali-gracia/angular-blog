@@ -6,6 +6,14 @@
 >
   <h2>Login to Admin panel</h2>
 
+  <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+    {{ error }}
+  </div>
+
+  <div class="alert alert-info" *ngIf="message">
+    {{ message }}
+  </div>
+
   <div class="form-control">
     <label for="email">Email:</label>
     <input id="email" type="email" formControlName="email" />
